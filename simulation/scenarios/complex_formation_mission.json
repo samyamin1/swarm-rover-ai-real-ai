@@ -1,0 +1,18 @@
+{
+    "name": "Complex Formation Mission",
+    "description": "A mission focused on maintaining complex formations.",
+    "obstacles": [],
+    "targets": [],
+    "agents": [
+        {"id": 1, "x": 600, "y": 400, "role": "alpha"},
+        {"id": 2, "x": 550, "y": 450, "role": "follower"},
+        {"id": 3, "x": 650, "y": 450, "role": "follower"},
+        {"id": 4, "x": 500, "y": 500, "role": "follower"},
+        {"id": 5, "x": 700, "y": 500, "role": "follower"},
+        {"id": 6, "x": 550, "y": 350, "role": "follower"},
+        {"id": 7, "x": 650, "y": 350, "role": "follower"},
+        {"id": 8, "x": 500, "y": 300, "role": "follower"},
+        {"id": 9, "x": 700, "y": 300, "role": "follower"},
+        {"id": 10, "x": 600, "y": 250, "role": "follower"}
+    ]
+}

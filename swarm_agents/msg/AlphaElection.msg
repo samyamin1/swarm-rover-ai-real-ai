@@ -1,0 +1,9 @@
+std_msgs/Header header
+
+string election_phase
+uint32 candidate_agent_id
+uint32 voting_agent_id
+float32 candidate_score
+string vote_reason
+bool election_complete
+uint32 elected_alpha_id

@@ -1,0 +1,111 @@
+{
+  "timestamp": 1753927897.010904,
+  "tests_run": 4,
+  "results": [
+    {
+      "name": "Basic Communication",
+      "description": "Test basic message passing between 2 agents",
+      "results": {
+        "agent_a_status": {
+          "agent_id": 1,
+          "name": "Alice",
+          "state": "idle",
+          "messages_sent": 1,
+          "messages_received": 0,
+          "uptime": 0.20583605766296387,
+          "last_message": "Hello from Alice"
+        },
+        "agent_b_status": {
+          "agent_id": 2,
+          "name": "Bob",
+          "state": "idle",
+          "messages_sent": 0,
+          "messages_received": 1,
+          "uptime": 0.20583391189575195,
+          "last_message": "Hello from Alice"
+        },
+        "message_sent": "Hello from Alice",
+        "response": "Message sent: Hello from Alice",
+        "acknowledgment": "Message received: Hello from Alice",
+        "success": true
+      }
+    },
+    {
+      "name": "Communication Stress Test",
+      "description": "Test high-frequency communication between agents",
+      "results": {
+        "messages_sent": 5,
+        "total_time": 1.2902250289916992,
+        "messages_per_second": 3.8752929819594812,
+        "agent_a_status": {
+          "agent_id": 1,
+          "name": "Sender",
+          "state": "idle",
+          "messages_sent": 5,
+          "messages_received": 0,
+          "uptime": 1.2902820110321045,
+          "last_message": "Message 5"
+        },
+        "agent_b_status": {
+          "agent_id": 2,
+          "name": "Receiver",
+          "state": "idle",
+          "messages_sent": 0,
+          "messages_received": 5,
+          "uptime": 1.2902820110321045,
+          "last_message": "Message 5"
+        },
+        "success": true
+      }
+    },
+    {
+      "name": "AI Decision Making",
+      "description": "Test AI decision making with agents",
+      "results": {
+        "scenarios_tested": 4,
+        "successful_decisions": 4,
+        "average_response_time": 26.64479172229767,
+        "detailed_results": [
+          {
+            "scenario": "You see a target ahead",
+            "model": "smollm:135m",
+            "decision": "Here is a Python function that implements this approach:\n\n```python\ndef move_forward(target):\n    command = \"MOVE FORWARD\"\n\n    if target == \"MOVE FORWARD\":\n        return command\n    elif target == \"TURN_LEFT\":\n        return command\n    elif target == \"TURN_RIGHT\":\n        return command\n    else:\n        return command\n```",
+            "execution": "Message received: Execute: Here is a Python function that implements this approach:\n\n```python\ndef move_forward(target):\n    command = \"MOVE FORWARD\"\n\n    if target == \"MOVE FORWARD\":\n        return command\n    elif target == \"TURN_LEFT\":\n        return command\n    elif target == \"TURN_RIGHT\":\n        return command\n    else:\n        return command\n```",
+            "status": "\u2705 Success",
+            "response_time": 23.766602039337158
+          },
+          {
+            "scenario": "You encounter an obstacle",
+            "model": "smollm:135m",
+            "decision": "To respond with only one command, you would need to:\n\n1. Move forward by 1 step (move right)\n2. Turn left by 1 step (turn right)\n3. Stop moving forward by 1 step (stop moving forward)\n4. Look for a door or exit and turn it clockwise (clockwise)\n5. Look for a door or exit and turn it counterclockwise (counterclockwise)\n6. Look for a door or exit and turn it clockwise again (clockwise)\n7. Look for a door or exit and turn it counterclockwise again (counterclockwise)\n8. Stop moving forward by 1 step (stop moving forward)\n9. Look for a door or exit and turn it clockwise again (clockwise)\n10. Look for a door or exit and turn it counterclockwise again (counterclockwise)\n\nThis command is the only one that can be used to navigate through an obstacle in search and rescue situations, but you would need to use multiple commands simultaneously to complete the mission successfully.",
+            "execution": "Message received: Execute: To respond with only one command, you would need to:\n\n1. Move forward by 1 step (move right)\n2. Turn left by 1 step (turn right)\n3. Stop moving forward by 1 step (stop moving forward)\n4. Look for a door or exit and turn it clockwise (clockwise)\n5. Look for a door or exit and turn it counterclockwise (counterclockwise)\n6. Look for a door or exit and turn it clockwise again (clockwise)\n7. Look for a door or exit and turn it counterclockwise again (counterclockwise)\n8. Stop moving forward by 1 step (stop moving forward)\n9. Look for a door or exit and turn it clockwise again (clockwise)\n10. Look for a door or exit and turn it counterclockwise again (counterclockwise)\n\nThis command is the only one that can be used to navigate through an obstacle in search and rescue situations, but you would need to use multiple commands simultaneously to complete the mission successfully.",
+            "status": "\u2705 Success",
+            "response_time": 51.131290912628174
+          },
+          {
+            "scenario": "You need to search an area",
+            "model": "smollm:135m",
+            "decision": "Here is a Python function that implements this approach:\n\n```python\ndef move_forwards(search_area):\n    \"\"\"\n    Takes a search area as input and returns a list of commands to move towards it.\n    \"\"\"\n    commands = []\n\n    for i in range(len(search_area) - 1, -1, -1):\n        command = \"MOVE FORWARD\" if i == 0 else \"MOVE BACKWARDS\"\n        commands.append(command)\n\n    return commands\n```",
+            "execution": "Message received: Execute: Here is a Python function that implements this approach:\n\n```python\ndef move_forwards(search_area):\n    \"\"\"\n    Takes a search area as input and returns a list of commands to move towards it.\n    \"\"\"\n    commands = []\n\n    for i in range(len(search_area) - 1, -1, -1):\n        command = \"MOVE FORWARD\" if i == 0 else \"MOVE BACKWARDS\"\n        commands.append(command)\n\n    return commands\n```",
+            "status": "\u2705 Success",
+            "response_time": 18.69128108024597
+          },
+          {
+            "scenario": "You found a target",
+            "model": "smollm:135m",
+            "decision": "Here is a Python function that implements this approach:\n\n```python\ndef move_forward(target):\n    command = \"MOVE_FORWARD\"\n\n    while True:\n        command = command + \"\\r\\n\"\n        response = input(\"Enter your response: \")\n\n        if command == \"MOVE_BACKWARD\":\n            print(\"Target is back to the starting point.\")\n            break\n\n        elif command == \"TURN_LEFT\":\n            print(\"Target is left on the path.\")\n            break\n\n        elif command == \"TURN_RIGHT\":\n            print(\"Target is right on the path.\")\n            break\n\n        response = input(\"Enter your response: \")\n\n        if command == \"MOVE_BACKWARD\":\n            print(\"Target is back to the starting point.\")\n            break\n\n    return target\n```",
+            "execution": "Message received: Execute: Here is a Python function that implements this approach:\n\n```python\ndef move_forward(target):\n    command = \"MOVE_FORWARD\"\n\n    while True:\n        command = command + \"\\r\\n\"\n        response = input(\"Enter your response: \")\n\n        if command == \"MOVE_BACKWARD\":\n            print(\"Target is back to the starting point.\")\n            break\n\n        elif command == \"TURN_LEFT\":\n            print(\"Target is left on the path.\")\n            break\n\n        elif command == \"TURN_RIGHT\":\n            print(\"Target is right on the path.\")\n            break\n\n        response = input(\"Enter your response: \")\n\n        if command == \"MOVE_BACKWARD\":\n            print(\"Target is back to the starting point.\")\n            break\n\n    return target\n```",
+            "status": "\u2705 Success",
+            "response_time": 12.98999285697937
+          }
+        ]
+      }
+    },
+    {
+      "name": "Memory Stress Test",
+      "error": "unsupported format string passed to NoneType.__format__",
+      "success": false
+    }
+  ],
+  "total_time": 108.58392119407654
+}

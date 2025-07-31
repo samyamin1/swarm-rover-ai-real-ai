@@ -1,0 +1,22 @@
+{
+    "name": "Basic Search and Rescue",
+    "description": "A simple scenario for search and rescue operations.",
+    "obstacles": [
+        [300, 200, 100, 50],
+        [700, 400, 80, 80],
+        [500, 600, 120, 40]
+    ],
+    "targets": [
+        [150, 150],
+        [900, 700],
+        [600, 300]
+    ],
+    "agents": [
+        {"id": 1, "x": 100, "y": 100, "role": "alpha"},
+        {"id": 2, "x": 200, "y": 200, "role": "follower"},
+        {"id": 3, "x": 300, "y": 100, "role": "follower"},
+        {"id": 4, "x": 400, "y": 200, "role": "follower"},
+        {"id": 5, "x": 500, "y": 100, "role": "follower"},
+        {"id": 6, "x": 600, "y": 200, "role": "follower"}
+    ]
+}

@@ -1,0 +1,58 @@
+[
+  {
+    "scenario": "You see a target ahead",
+    "decision": "MOVE_FORWARD",
+    "rule_used": "target_ahead",
+    "response_time": 1.3113021850585938e-05,
+    "timestamp": 1753928916.907618
+  },
+  {
+    "scenario": "You encounter an obstacle",
+    "decision": "SEARCH",
+    "rule_used": "default",
+    "response_time": 0.00026106834411621094,
+    "timestamp": 1753928916.9078882
+  },
+  {
+    "scenario": "You need to search an area",
+    "decision": "SEARCH",
+    "rule_used": "default",
+    "response_time": 9.989738464355469e-05,
+    "timestamp": 1753928916.907996
+  },
+  {
+    "scenario": "You found a target",
+    "decision": "SEARCH",
+    "rule_used": "default",
+    "response_time": 0.00010180473327636719,
+    "timestamp": 1753928916.908104
+  },
+  {
+    "scenario": "There's a wall in front of you",
+    "decision": "SEARCH",
+    "rule_used": "default",
+    "response_time": 8.821487426757812e-05,
+    "timestamp": 1753928916.9082
+  },
+  {
+    "scenario": "No targets visible",
+    "decision": "SEARCH",
+    "rule_used": "no_target",
+    "response_time": 5.602836608886719e-05,
+    "timestamp": 1753928916.9082618
+  },
+  {
+    "scenario": "Path is blocked by obstacle",
+    "decision": "SEARCH",
+    "rule_used": "default",
+    "response_time": 0.00011110305786132812,
+    "timestamp": 1753928916.9083788
+  },
+  {
+    "scenario": "Target detected in front",
+    "decision": "MOVE_FORWARD",
+    "rule_used": "target_detected",
+    "response_time": 2.09808349609375e-05,
+    "timestamp": 1753928916.908406
+  }
+]

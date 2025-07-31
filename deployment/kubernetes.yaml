@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: swarm-rover-ai-deployment
+  labels:
+    app: swarm-rover-ai
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: swarm-rover-ai
+  template:
+    metadata:
+      labels:
+        app: swarm-rover-ai
+    spec:
+      containers:
+      - name: swarm-rover-ai
+        image: swarm-rover-ai:latest  # This should match the image name from your Dockerfile
+        ports:
+        - containerPort: 80
+        # Add resource limits and requests as needed
+        resources:
+          limits:
+            cpu: "1"
+            memory: "1Gi"
+          requests:
+            cpu: "500m"
+            memory: "512Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: swarm-rover-ai-service
+spec:
+  selector:
+    app: swarm-rover-ai
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: LoadBalancer # Use NodePort or ClusterIP if LoadBalancer is not available/desired

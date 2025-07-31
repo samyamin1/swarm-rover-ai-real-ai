@@ -1,0 +1,10 @@
+std_msgs/Header header
+
+uint32 announcing_agent_id
+string task_type
+string task_priority
+geometry_msgs/Point task_location
+float32 estimated_duration
+string[] required_capabilities
+uint32 max_agents_needed
+string task_description

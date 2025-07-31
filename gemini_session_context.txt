@@ -1,0 +1,101 @@
+## Gemini Session Context - Swarm Rover AI Real AI Integration
+
+**Date of last session:** Saturday, July 26, 2025
+**Project directory:** /Users/samyamin/Downloads/Gemini_Swarm_AI_Powered/swarm_rover_ai_real_ai
+
+**Project Overview:**
+The `swarm_rover_ai_real_ai` project is a fork of the original `swarm_rover_ai` project, created to integrate real AI models (LLMs and VLMs) into the swarm simulation. The primary goal is to enable AI-driven perception and decision-making for the simulated rover agents, moving from a mocked AI to actual model inference. The current focus is on optimizing resource usage by employing smaller, more efficient models.
+
+**Key Modifications Made in `swarm_rover_ai_real_ai` (Chronological Order):**
+
+1.  **Initial Project Copy:** The original `swarm_rover_ai` project was copied to `swarm_rover_ai_real_ai`.
+
+2.  **`docker-compose.yml` (Initial AI Integration):**
+    *   Included an `ollama` service.
+    *   Configured `ollama` to initially pull `llava` and `phi3` models.
+    *   Made `simulation` service dependent on `ollama`.
+
+3.  **`Dockerfile` (Initial Python Dependencies):**
+    *   Updated to install `ollama` Python client and `Pillow`.
+
+4.  **`requirements.txt`:**
+    *   Added `ollama` and `Pillow`.
+
+5.  **`swarm_agents/swarm_agents/perception_bridge.py` (Initial Refactoring):**
+    *   Refactored to remove ROS2 dependencies for direct Ollama integration.
+    *   Used `ollama.Client` to interact with `llava` (VLM) and `phi3` (LLM).
+    *   Adjusted type hints (`Tuple` imported from `typing`).
+
+6.  **`models/download_models.py` and `models/optimize_models.py`:**
+    *   Simplified to reflect Ollama's handling of model pulling and optimization.
+
+7.  **`simulation/src/simulation_environment.py` (AI Integration Logic):**
+    *   `SwarmSimulation.__init__`: Added optional `perception_bridge` argument.
+    *   `create_agents`: Passed `perception_bridge` instance to `SimulationAgent`.
+    *   `SimulationAgent.__init__`: Accepted `perception_bridge`, added `last_ai_decision_time` and `ai_decision_interval`.
+    *   `SimulationAgent.update`: Modified to call `_get_local_scene_description` and `perception_bridge.process_perception_input` for AI decisions, and `_apply_ai_decision` to act on them.
+    *   Added `_get_local_scene_description` and `_apply_ai_decision` methods.
+
+8.  **`testing/src/testing_framework.py`:**
+    *   Modified `setUp` to use `MockPerceptionBridge` for `SwarmSimulation` to prevent tests from relying on a live Ollama instance.
+    *   Fixed `TypeError: 'type' object is not subscriptable` by importing `Tuple` from `typing`.
+
+9.  **`Dockerfile` (Caching Optimization):**
+    *   Reordered instructions: `COPY requirements.txt` before `RUN pip install`, then `COPY . /app`.
+
+10. **`docker-compose.yml` (Ollama Entrypoint Refinement - Attempt 1):**
+    *   Changed `ollama` service `command` to `entrypoint` with an embedded bash script to pull models and then `ollama serve`.
+
+11. **`docker-compose.yml` (Ollama Entrypoint Refinement - Attempt 2):**
+    *   Simplified `ollama` service `entrypoint` to just `ollama serve`.
+    *   Attempted manual `ollama pull` via `docker-compose exec`.
+
+12. **`docker-compose.yml` (Ollama Entrypoint Refinement - Attempt 3):**
+    *   Changed `ollama` service `command` to `tail -f /dev/null` to keep container alive.
+    *   Attempted `ollama serve &` and `ollama pull` via `docker-compose exec`.
+
+13. **`Dockerfile.ollama` (New File) and `ollama_entrypoint.sh` (New File):**
+    *   Created `Dockerfile.ollama` to build a custom Ollama image.
+    *   Added `RUN apt-get update && apt-get install -y curl` to `Dockerfile.ollama`.
+    *   Created `ollama_entrypoint.sh` to start `ollama serve`, wait for it, and then pull models.
+    *   `Dockerfile.ollama` now copies and makes `ollama_entrypoint.sh` executable.
+
+14. **`docker-compose.yml` (Integration of `Dockerfile.ollama`):**
+    *   Modified `ollama` service to use `build: { context: ., dockerfile: Dockerfile.ollama }`.
+    *   Removed direct `command` or `entrypoint` from `ollama` service, relying on `Dockerfile.ollama`.
+
+15. **`perception_bridge.py` (Model Update):**
+    *   Updated `self.llava_model` to `"moondream:2"` and `self.phi3_model` to `"smollm:135m"`.
+
+16. **`simulation/src/simulation_environment.py` (Logging Implementation):**
+    *   Imported `datetime` and `os`.
+    *   Added `_setup_logger()` to create a `logs/` directory and a timestamped log file.
+    *   Added `_log_simulation_end()` to write final metrics to the log file.
+    *   Replaced f-strings with `.format()` calls in logging functions to resolve `SyntaxError`.
+
+**Troubleshooting History & Lessons Learned:**
+
+*   **Docker Daemon Errors:** Initial issues were Docker internal, resolved by restarting Docker Desktop.
+*   **Python Type Hinting:** `TypeError` in `testing_framework.py` due to `tuple[str, str]` syntax in Python 3.8 was fixed by using `typing.Tuple`.
+*   **Module Not Found:** `ModuleNotFoundError` for `swarm_agents` was resolved by ensuring proper installation in editable mode and correct import paths.
+*   **Ollama Startup & Model Pulling:** This has been the most persistent challenge.
+    *   Initial attempts to embed `ollama pull` directly in `docker-compose.yml`'s `command` or `entrypoint` led to `unknown command` or `service not running` errors. This was due to `ollama` not being the primary executable or the shell not correctly interpreting the commands.
+    *   The `curl: command not found` error highlighted that `curl` was missing in the `ollama` base image, preventing the readiness check in `ollama_entrypoint.sh`.
+    *   The current approach uses a dedicated `Dockerfile.ollama` to install `curl` and a custom `ollama_entrypoint.sh` script. This script is set as the `CMD` in `Dockerfile.ollama`, allowing the base `ollama` executable to be the `ENTRYPOINT`, and our script runs as its command. This should provide a robust way to start Ollama, wait for it, and then pull models.
+*   **Memory Constraints:** Initial models (`llava`, `phi3`) were too large for the allocated Docker memory. Switched to smaller models (`smollm:135m`, `moondream:2`) to address this.
+*   **Syntax Errors:** F-string syntax errors in `simulation_environment.py` were resolved by switching to `.format()` for broader compatibility and to avoid potential subtle parsing issues.
+
+**Current State:**
+
+*   All Dockerfiles and `docker-compose.yml` have been updated with the latest configurations.
+*   The `perception_bridge.py` is configured to use `smollm:135m` and `moondream:2`.
+*   The `simulation_environment.py` includes session logging functionality.
+*   The `ollama` service is configured to install `curl` and use a custom entrypoint script to manage Ollama server startup and model pulling.
+*   The project is ready for a clean rebuild and a full simulation run.
+
+**Remaining Plan:**
+
+1.  **Clean Rebuild and Run:** Execute `docker-compose down -v` to ensure a clean slate, followed by `docker-compose build` to rebuild all images with the latest configurations, and finally `docker-compose up` to start the entire simulation. This step is crucial to ensure all changes are applied.
+2.  **Monitor and Verify:** Observe the logs carefully for both `ollama` and `simulation` services. Confirm that Ollama starts successfully, pulls the correct models, and that the simulation runs without errors, utilizing the new models and generating log files.
+3.  **Analyze Simulation Results:** Once the simulation runs, review the generated log files in the `logs/` directory to assess the performance and behavior of the AI models.
+

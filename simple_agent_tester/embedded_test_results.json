@@ -1,0 +1,36 @@
+[
+  {
+    "model": "smollm:135m",
+    "tests": [
+      {
+        "model": "smollm:135m",
+        "success": false,
+        "response_time": null,
+        "response": null,
+        "error": "Request timed out"
+      },
+      {
+        "model": "smollm:135m",
+        "success": false,
+        "response_time": null,
+        "response": null,
+        "error": "Request timed out"
+      },
+      {
+        "model": "smollm:135m",
+        "success": false,
+        "response_time": null,
+        "response": null,
+        "error": "Request timed out"
+      },
+      {
+        "model": "smollm:135m",
+        "success": false,
+        "response_time": null,
+        "response": null,
+        "error": "Request timed out"
+      }
+    ],
+    "success_rate": 0.0
+  }
+]

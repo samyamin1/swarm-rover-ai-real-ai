@@ -1,0 +1,46 @@
+### **Project: Swarm Rover AI**
+
+**Objective:** To create a simulation of 6-10 autonomous rovers that can collaborate on missions like search and rescue using AI-powered decision making.
+
+**Architecture:** The project is built on a foundation of ROS2 for communication, Python for the core logic, Pygame for the 2D simulation, Ollama for running the AI models, and Docker to containerize the entire system.
+
+### **Current Status**
+
+As of our last session, the project is in a non-functional state. While the simulation runs, the agents are not performing their missions correctly due to a series of cascading errors related to the AI models.
+
+**Key Metrics:**
+*   **Mission Success Rate:** 0%
+*   **Formation Accuracy:** 0%
+*   **Communication Efficiency:** 37.5%
+
+**The Core Problem:** The primary issue is a failure to correctly load and utilize the AI models, specifically the vision-language model. This has led to a series of errors, including:
+*   `model not found` errors for both `moondream:2` and `llava:7b`.
+*   `AttributeError: 'PerceptionBridge' object has no attribute 'llava_model'`
+*   `model requires more system memory (6.1 GiB) than is available (4.1 GiB)`
+
+These errors prevent the agents from receiving valid commands from the AI, causing them to default to an idle state and fail their missions.
+
+### **Next Steps: Our Plan for the Next Session**
+
+Our immediate priority is to resolve the AI model integration issue. Here is the plan:
+
+1.  **Simplify the AI:** We will start by simplifying the AI decision-making process to use a single, reliable language model (`smollm:135m`) for both analyzing the environment and making decisions. This will eliminate the model loading errors as a variable and allow us to focus on the core logic.
+
+2.  **Fix Target Discovery:** Once the agents are receiving valid commands, we will need to debug the target discovery mechanism in `simulation/src/simulation_environment.py` to ensure that the agents can correctly identify and report targets.
+
+3.  **Activate Formation Control:** With the agents moving and making decisions, we will then activate and debug the formation control algorithms in `swarm_agents/swarm_agents/coordination_algorithms.py`.
+
+4.  **Address Communication Issues:** We will investigate the low communication efficiency and debug the agent-to-agent communication in `swarm_agents/swarm_agents/agent_node.py`.
+
+5.  **Re-evaluate AI Models:** Once the core functionality is working, we will revisit the AI model integration and attempt to use a more sophisticated vision-language model, keeping the system's memory constraints in mind.
+
+### **Key Files for Our Next Session**
+
+*   `simulation/src/simulation_environment.py`: The main simulation engine.
+*   `swarm_agents/swarm_agents/agent_node.py`: The base agent implementation.
+*   `swarm_agents/swarm_agents/perception_bridge.py`: The AI integration point.
+*   `swarm_agents/swarm_agents/coordination_algorithms.py`: The swarm coordination logic.
+*   `docker-compose.yml`: The deployment configuration.
+*   `ollama_entrypoint.sh`: The script for pulling the AI models.
+
+By following this plan, we will be able to systematically address the issues and get the Swarm Rover AI project back on track.
