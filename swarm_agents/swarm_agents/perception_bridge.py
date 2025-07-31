@@ -69,7 +69,13 @@ class FinalAI:
         """Call AI with optimized parameters"""
         prompt = f"Scenario: {scenario}. Reply with ONLY: MOVE_FORWARD, TURN_LEFT, TURN_RIGHT, STOP, or SEARCH"
         
-        url = f"{self.ollama_url}/api/chat"
+        # Fix URL format for Docker container
+        if self.ollama_url.startswith('ollama:'):
+            # Convert ollama:11434 to http://ollama:11434
+            url = f"http://{self.ollama_url}"
+        else:
+            url = f"{self.ollama_url}/api/chat"
+        
         data = {
             "model": self.model,
             "messages": [{"role": "user", "content": prompt}],
